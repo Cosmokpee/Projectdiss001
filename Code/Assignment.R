@@ -46,11 +46,17 @@ getwd()
 #
 # Contains R functions: myFunction
 ###
-1a) 1234 + 45674596/2floor
-1b) 100456 - 3350 + 23
-1c) natural logarithm of 15
-1d) 4596 / 12
-1e) 8998 * 76
+# Answer to 1a) 
+1234 + 4567 
+4596/2floor
+# Answer to 1b)
+ 100456 - 3350 + 23
+# Answer to 1c)
+ natural logarithm of 15
+# Answer to 1d) 
+4596 / 12
+#Answer to 1e)
+ 8998 * 76
 1f) Euclidean division remainder of 10 and 6
 1g) the square root of -8
 "<your location>/Assignments1/"
