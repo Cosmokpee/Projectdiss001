@@ -57,8 +57,10 @@ getwd()
 4596 / 12
 #Answer to 1e)
  8998 * 76
-1f) Euclidean division remainder of 10 and 6
-1g) the square root of -8
+# Answer to 1f)
+Euclidean division remainder of 10 and 6
+# Answer to 1g)
+the square root of -8
 "<your location>/Assignments1/"
 2a) Use the c() function to create a vector from 1 to 10
 2b) Use the : operator to create a vector from 11 to 20
@@ -89,3 +91,32 @@ c(42,57,12,39,1,3,4)
 x <- c(1, 2, 3)
 y <- c(10, 20)
 c(x, y, 5)
+100456 - 3350 + 456
+[1] 97562
+log(15)
+[1] 2.70805
+4596 / 12
+[1] 383
+8998 * 76
+[1] 683848
+floor (10 / 6)
+[1] 1
+sqrt (-8)
+[1] NaN
+c (1, 2, 3, 4, 5, 6, 7, 8, 9, 10) 
+[1]  1  2  3  4  5  6  7  8  9 10
+c ( 11:20)
+[1] 11 12 13 14 15 16 17 18 19 20
+> seq (1,20,5)
+[1]  1  6 11 16
+createEvenLettersVector <- function() {even_letters <- LETTERS[seq(from = 2, to = length(LETTERS), by = 2)]return(even_letters)}
+# Call the function
+even_letters_vector <- createEvenLettersVector()
+createEvenLettersVector()
+[1] "B" "D" "F" "H" "J" "L" "N" "P" "R" "T" "V" "X" "Z"
+class (c)
+[1] "function"
+> is.character(c)
+[1] FALSE
+> is.logical (c)
+[1] FALSE
