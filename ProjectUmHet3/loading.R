@@ -36,3 +36,6 @@ nchr <- length(table(mapsorted[ , "Chr"]))
 	if(x %in% onX) chr <- 20
     points(x = chr, y = mapsorted[x, "Position"], pch = "-")
  }
+ 
+ 
+  
