@@ -15,6 +15,7 @@ genotype[1:5,1:5]
 parents[1:5,1:5]
 map[1:3,1:3]
 
+map < - cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
 phenotypes[1:5, ]
 table(phenotypes[, "Cohort.Year"])
 table(phenotypes[, "Site"])
@@ -42,24 +43,72 @@ hist(phenotypes[UTP, "Longevity_HET3_ITP"])
 hist(phenotypes[JLP, "Longevity_HET3_ITP"])
 
 MaleUM <- which(phenotypes[, "Site"] == "UM", phenotypes["Sex"] == "M")
-length(MaleUM)
 FemaleUM <- which(phenotypes[,"Site"] == "UM", phenotypes[, "Sex"] == "F")
-length(FemaleUM)
 MaleUT <- which(phenotypes[,"Site"] == "UT", phenotypes[, "Sex"] == "M")
-length(MaleUT)
 FemaleUT <- which(phenotypes[,"Site"] == "UT", phenotypes[, "Sex"] == "F")
-length(FemaleUT)
 MaleJL <- which(phenotypes[,"Site"] == "JL", phenotypes[, "Sex"] == "M")
-length(MaleJL)
 FemaleJL <- which(phenotypes[,"Site"] == "JL", phenotypes[, "Sex"] == "F")
-length(FemaleJL)
+
 
 MaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "M")
+length(MaleUM)
 FemaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "F")
+length(FemaleUM)
+
+length(UMP)
+
 MaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "M")
+length(MaleUT)
 FemaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "F")
+length(FemaleUT)
+
+length(UTP)
+
 MaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "M")
+length(MaleJL)
 FemaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "F")
+length(FemaleJL)
+
+length(JLP)
+
+MaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "M")
+length(MaleUM)
+FemaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "F")
+length(FemaleUM)
+
+length(UMP)
+
+MaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "M")
+length(MaleUT)
+FemaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "F")
+length(FemaleUT)
+
+length(UTP)
+
+MaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "M")
+length(MaleJL)
+FemaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "F")
+length(FemaleJL)
+
+length(JLP)
+
+table(phenotypes[MaleUM, "Cohort.Year"])
+hist(phenotypes[MaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UM")
+table(phenotypes[FemaleUM, "Cohort.Year"])
+hist(phenotypes[FemaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UM")
+table(phenotypes[MaleUT, "Cohort.Year"])
+hist(phenotypes[MaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UT")
+table(phenotypes[FemaleUT, "Cohort.Year"])
+hist(phenotypes[FemaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UT")
+table(phenotypes[MaleJL, "Cohort.Year"])
+hist(phenotypes[MaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at JL")
+table(phenotypes[FemaleJL, "Cohort.Year"])
+hist(phenotypes[FemaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at JL")
+
+mean(MaleUM)
+mode(phenotypes[MaleUM, "Cohort.Year"])
+mean(phenotypes[MaleUM, "Cohort.Year"])
+median(phenotypes[MaleUM, "Cohort.Year"])
 
 plot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"])
 plot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"])
