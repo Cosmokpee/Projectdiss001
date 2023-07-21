@@ -92,9 +92,17 @@ parents <- cbind(parents, "NA" = "")
 colnames(parents)[10:12] <- c("0/0", "0/1", "1/1")
 
 genotype[1, ]
+rr <- c()
+for(x in 1:nrow(genotype)){
+	inm <- rownames(genotype)[x] # marker
+	minp <- map[inm, "PosName"] # convert from name to chr_position
+	gt <- as.character(genotype[x, ])
+	gt[is.na(gt)] <- "NA"
+	r <- as.character(parents[minp, gt])
+	rr <- rbind (rr,r)
+}
 
-m <- rownames(genotype)[1]
-gt <- as.character(genotype[1, ])
-gt[is.na(gt)] <- "NA"
 
-parents[m, gt]
+colnames(rr) <- colnames(genotype)
+rownames(rr) <- rownames(genotype)
+write.table(rr, "pHaplo.txt", sep="\t", quote=FALSE)
