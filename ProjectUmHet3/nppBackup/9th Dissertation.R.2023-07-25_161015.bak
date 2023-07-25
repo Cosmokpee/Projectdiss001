@@ -1,0 +1,96 @@
+#
+##
+###Solomon - Imputation using R/qtl
+####
+##### Data Analysis part 8 continued
+setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
+
+# Loading in the different files
+phenotypes <- read.table ("ind.sorted.phe.txt")
+map <- read.table ("map.sorted.txt")
+map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
+gtsPM <- read.table("gtsPM.txt", sep = "/t", quote = FALSE)
+gtsPM[1:10,1:10]
+
+all
+
+
+#Pull out the phenotypes
+Y <- phenotypes[, "Longevity_HET3_ITP"]
+sex <- phenotypes[, "Sex"]
+site <-phenotypes[, "Site"]
+cohort <- as.factor(phenotypes[, "Cohort.Year"])
+treatment <- as.factor(phenotypes[, "Treatment_Effect"])
+
+mnull <- (lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + 0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+threshhold5 <- -log10 (0.05)
+threshhold1 <- -log10 (0.01)
+threshhold01 <- -log10 (0.001)
+
+
+
+abline

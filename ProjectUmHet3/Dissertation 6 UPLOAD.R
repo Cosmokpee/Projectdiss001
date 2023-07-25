@@ -2,7 +2,7 @@
 ##
 ###Solomon
 ####
-##### Data Analysis part 6
+##### Data Analysis part 8
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
 # Loading in the different files
@@ -10,12 +10,16 @@ phenotypes <- read.table ("ind.sorted.phe.txt")
 map <- read.table ("map.sorted.txt")
 genotype <- read.table ("all.vcf.sorted.txt")
 parents <- read.table ("fvcfAll.txt")
+map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
+phaplo <- read.table ("pHaplo.txt",  sep = "\t")
+
+
 phenotypes[1:5,1:5]
 genotype[1:5,1:5]
 parents[1:5,1:5]
 map[1:3,1:3]
 
-map < - cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
+
 phenotypes[1:5, ]
 table(phenotypes[, "Cohort.Year"])
 table(phenotypes[, "Site"])

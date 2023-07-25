@@ -48,8 +48,7 @@ write.table(t(mgeno), "fille_geno.txt", sep = "\t", quote=FALSE)
 genoprob <- calc.genoprob(rQTLmap)
 gtsPM <- pull.genoprob(genoprob)
 
-rownames(gtsPM) = colnames(haplo)
-write.table(gtsPM, "gtsPM.txt", sep ="\t", quote = FALSE)
+
 
 
 
