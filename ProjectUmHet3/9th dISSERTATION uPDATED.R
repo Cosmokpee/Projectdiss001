@@ -1,8 +1,8 @@
 #
 ##
-###Solomon - Dissertation Session 9
+###Solomon - Imputation using R/qtl
 ####
-##### QTL mapping
+##### QTL mapping For Mice that lives for more than 850 days 
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
@@ -12,10 +12,10 @@ map <- read.table ("map.sorted.txt")
 map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
 gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE)
 
-
 # fix for the map not matching to the genotypes after merging markers and imputation
 MingtsPM <- unique(unlist(lapply(strsplit(colnames(gtsPM), ":"), "[", 1)))
 map <- map[MingtsPM, ]
+
 
 # Pull out the phenotypes
 Y <- phenotypes[, "Longevity_HET3_ITP"]
@@ -27,13 +27,13 @@ treatment <- as.factor(phenotypes[, "Treatment_Effect"])
 # Check the ordering between phenotypes and gtsPM
 all(rownames(phenotypes) == rownames(gtsPM))
 
-mnull <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + 0)
+mnull  <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + cohort:treatment + 0)
 
 pvals <- c()
 for(marker in MingtsPM){
   iix <- grep(marker, colnames(gtsPM))
   gts <- as.matrix(gtsPM[, iix])
-  mfull <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + gts + 0)
+  mfull <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort +  cohort:treatment + gts + 0)
   pM <- as.numeric(na.omit(anova(mnull,mfull)[, "Pr(>F)"]))
   pvals <- c(pvals, pM)
 }
@@ -58,19 +58,19 @@ for(x in 1:20){
   iim <- which(map[, "Chr"] == x)
   map[iim, "cumPos"] <- pos + map[iim, "Position"]
   chr.mids <- c(chr.mids, pos + .5 * chr.length[x])
-  pos <- pos + chr.length[x] + 30000000
+  pos <- pos + chr.length[x] + 50000000
 }
 
-plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice")
+plot(x = map[, "cumPos"], y = -log10(pvals), col = c("blue", "green")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice over 850 days")
 i <- 1
 for(x in 1:20){
   iim <- which(map[, "Chr"] == x)
-  points(x = map[iim, "cumPos"], y = -log10(pvals[iim]), t = 'l', col = c("black", "orange")[i])
+  points(x = map[iim, "cumPos"], y = -log10(pvals[iim]), t = 'l', col = c("blue", "green")[i])
   i <- i + 1
   if(i > 2) i <- 1
 }
-abline(h = threshold5, col = "red", lty = 2)
-abline(h = threshold1, col = "orange", lty = 2)
-abline(h = threshold01, col = "green", lty = 2)
+abline(h = threshold5, col = "black", lty = 2)
+abline(h = threshold1, col = "pink", lty = 2)
+abline(h = threshold01, col = "yellow", lty = 2)
 axis(1, at = chr.mids, c(1:19, "X"))
-legend("topleft", c("0.1%", "1%", "5%"), lty = 2, col =c("green", "orange", "red"), title = "Bonferonni Threshold")
+legend("topleft", c("0.1%", "1%", "5%"), lty = 2, col =c("yellow", "pink", "black"), title = "Bonferonni Threshold")
