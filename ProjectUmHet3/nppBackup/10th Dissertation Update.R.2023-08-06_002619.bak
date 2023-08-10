@@ -1,8 +1,8 @@
 #
 ##
-###Solomon - Dissertation Session 9
+###Solomon - Dissertation Session 10 Update
 ####
-##### QTL mapping
+##### QTL mapping summary table genration for mice that lives for more than 850 days
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
@@ -115,7 +115,7 @@ round(aa4$stats[3,],0)
 aa5 <-  boxplot(adjusted ~ unlist(gtsFilled["6_114480547", ]))
 round(aa5$stats[3,],0)
 aa6 <-  boxplot(adjusted ~ unlist(gtsFilled["7_3162282", ]))
-round(aa6$stats[3,],0)
+round(aa5$stats[3,],0)
 aa7 <-  boxplot(adjusted ~ unlist(gtsFilled["7_42299841", ]))
 round(aa7$stats[3,],0)
 aa8 <-  boxplot(adjusted ~ unlist(gtsFilled["7_139640399", ]))

@@ -1,8 +1,8 @@
 #
 ##
-###Solomon - Dissertation Session 9
+###Solomon - Dissertation Session 10 Update
 ####
-##### QTL mapping
+##### QTL mapping summary table genration for mice that lives for more than 850 days
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
@@ -27,7 +27,7 @@ treatment <- as.factor(phenotypes[, "Treatment_Effect"])
 # Check the ordering between phenotypes and gtsPM
 all(rownames(phenotypes) == rownames(gtsPM))
 
-mnull <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + 0)
+mnull <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + cohort:treatment + 0)
 
 # empty vector
 adjusted <- rep(NA, length (Y))
@@ -38,12 +38,11 @@ adjusted[as.numeric(names(adj))] <- adj + mean(Y)
 
 adjusted [1:10]
 
-
 pvals <- c()
 for(marker in MingtsPM){
   iix <- grep(marker, colnames(gtsPM))
   gts <- as.matrix(gtsPM[, iix])
-  mfull <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + gts + 0)
+  mfull <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort +  cohort:treatment + gts + 0)
   pM <- as.numeric(na.omit(anova(mnull,mfull)[, "Pr(>F)"]))
   pvals <- c(pvals, pM)
 }
@@ -68,22 +67,23 @@ for(x in 1:20){
   iim <- which(map[, "Chr"] == x)
   map[iim, "cumPos"] <- pos + map[iim, "Position"]
   chr.mids <- c(chr.mids, pos + .5 * chr.length[x])
-  pos <- pos + chr.length[x] + 30000000
+  pos <- pos + chr.length[x] + 50000000
 }
 
-plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice")
+plot(x = map[, "cumPos"], y = -log10(pvals), col = c("blue", "green")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice over 850 days")
 i <- 1
 for(x in 1:20){
   iim <- which(map[, "Chr"] == x)
-  points(x = map[iim, "cumPos"], y = -log10(pvals[iim]), t = 'l', col = c("black", "orange")[i])
+  points(x = map[iim, "cumPos"], y = -log10(pvals[iim]), t = 'l', col = c("blue", "green")[i])
   i <- i + 1
   if(i > 2) i <- 1
 }
-abline(h = threshold5, col = "red", lty = 2)
-abline(h = threshold1, col = "orange", lty = 2)
-abline(h = threshold01, col = "green", lty = 2)
+abline(h = threshold5, col = "black", lty = 2)
+abline(h = threshold1, col = "pink", lty = 2)
+abline(h = threshold01, col = "yellow", lty = 2)
 axis(1, at = chr.mids, c(1:19, "X"))
-legend("topleft", c("0.1%", "1%", "5%"), lty = 2, col =c("green", "orange", "red"), title = "Bonferonni Threshold")
+legend("topleft", c("0.1%", "1%", "5%"), lty = 2, col =c("yellow", "pink", "black"), title = "Bonferonni Threshold")
+
 
 cbind(map, LOD = -log10(pvals))
 
@@ -103,19 +103,19 @@ vioplot(adjusted ~ unlist(gtsFilled["1_116455004", ]),
 	col = c("green", "blue", "orange", "hotpink"), main = "Longevity effect on Haplotypes", sub = "Markers at 1_116455004")
 axis(1, at  = 1:4, c("A|C", "A|D", "B|C", "B|D"))
 
-aa1 <-  boxplot(adjusted ~ unlist(gtsFilled["1_139314660", ]))
+aa1 <-  boxplot(adjusted ~ unlist(gtsFilled["1_116455004", ]))
 round(aa1$stats[3,],0)
 
 aa2 <-  boxplot(adjusted ~ unlist(gtsFilled["1_170885169", ]))
 round(aa2$stats[3,],0)
-aa3 <-  boxplot(adjusted ~ unlist(gtsFilled["1_171969770", ]))
+aa3 <-  boxplot(adjusted ~ unlist(gtsFilled["4_155785470", ]))
 round(aa3$stats[3,],0)
-aa4 <-  boxplot(adjusted ~ unlist(gtsFilled["4_155785470", ]))
+aa4 <-  boxplot(adjusted ~ unlist(gtsFilled["6_114480563", ]))
 round(aa4$stats[3,],0)
-aa5 <-  boxplot(adjusted ~ unlist(gtsFilled["6_114480547", ]))
+aa5 <-  boxplot(adjusted ~ unlist(gtsFilled["7_42299841", ]))
 round(aa5$stats[3,],0)
-aa6 <-  boxplot(adjusted ~ unlist(gtsFilled["7_3162282", ]))
-round(aa6$stats[3,],0)
+aa6 <-  boxplot(adjusted ~ unlist(gtsFilled["8_129129250", ]))
+round(aa6$stats$stats[3,],0)
 aa7 <-  boxplot(adjusted ~ unlist(gtsFilled["7_42299841", ]))
 round(aa7$stats[3,],0)
 aa8 <-  boxplot(adjusted ~ unlist(gtsFilled["7_139640399", ]))
