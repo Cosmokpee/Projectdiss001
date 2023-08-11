@@ -6,7 +6,7 @@
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
-mr <- read.table("data350.txt", sep ="\t")
+mr <- read.table("data850.txt", sep ="\t")
 regions <- mr[, c(2,3,5)]
 colnames(regions) <- c("Chr", "Proximal", "Distal")
 regions
@@ -38,5 +38,5 @@ for(i in 1:nrow(regions)){
 	if(length(iix) > 0) pcg <- pcg[-iix, ]
 	iix <- grep("RIKEN cDNA",pcg[, "mgi_description"])
 	if(length(iix) > 0) pcg <- pcg[-iix, ]
-	write.table(pcg, file = paste0("PCG_",gsub(":", "_",r), ".txt"), sep = "\t", quote=FALSE, row.names=FALSE)
+	write.table(pcg, file = paste0("PCG850_",gsub(":", "_",r), ".txt"), sep = "\t", quote=FALSE, row.names=FALSE)
 }

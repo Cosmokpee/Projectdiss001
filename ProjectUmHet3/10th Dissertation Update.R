@@ -132,7 +132,7 @@ aa13 <-  boxplot(adjusted ~ unlist(gtsFilled["17_17733625", ]))
 round(aa13$stats[3,],0)
 aa14 <-  boxplot(adjusted ~ unlist(gtsFilled["18_70827264", ]))
 round(aa14$stats[3,],0)
-aa15 <-  boxplot(adjusted ~ unlist(gtsFilled["20_150646933", ]))
+aa15 <-  boxplot(adjusted ~ unlist(gtsFilled["3_159581164", ]))
 round(aa15$stats[3,],0)
 
 
