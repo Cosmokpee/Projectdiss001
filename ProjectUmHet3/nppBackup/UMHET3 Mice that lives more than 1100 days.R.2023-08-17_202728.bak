@@ -294,7 +294,7 @@ for(i in 1:nrow(regions)){
 	if(length(iix) > 0) pcg <- pcg[-iix, ]
 	iix <- grep("RIKEN cDNA",pcg[, "mgi_description"])
 	if(length(iix) > 0) pcg <- pcg[-iix, ]
-	write.table(pcg, file = paste0("PCG_1100_",gsub(":", "_",r), ".txt"), sep = "\t", quote=FALSE, row.names=FALSE)
+	write.table(pcg, file = paste0("PCG_600_",gsub(":", "_",r), ".txt"), sep = "\t", quote=FALSE, row.names=FALSE)
 }
 
 
