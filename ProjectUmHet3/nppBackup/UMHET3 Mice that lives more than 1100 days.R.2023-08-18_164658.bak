@@ -55,10 +55,10 @@ AIC(m1,m2)
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
 # Loading in the different files
-phenotypes <- read.table ("ind.sorted.phe.txt") # map for 1100
+phenotypes <- read.table ("ind.sorted.phe.txt")
 map <- read.table ("map.sorted.txt")
 map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
-gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE) # also for the gtsPM for 1100
+gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE)
 
 
 # fix for the map not matching to the genotypes after merging markers and imputation

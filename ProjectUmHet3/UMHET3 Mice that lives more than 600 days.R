@@ -2,9 +2,8 @@
 ##
 ###
 ####
-##### Code for Dissertation (July 4th)
+##### Code for Dissertation 
 ######
-
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
@@ -68,9 +67,377 @@ setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
 # Loading in the different files
 phenotypes <- read.table ("ind.sorted.phe.txt")
+iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
+phenotypes <- phenotypes[iix, ]
+map <- read.table ("map.sorted.txt")
+genotype <- read.table ("all.vcf.sorted.txt")
+parents <- read.table ("fvcfAll.txt")
+map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
+phaplo <- read.table ("pHaplo.txt",  sep = "\t")
+
+
+phenotypes[1:5,1:5]
+genotype[1:5,1:5]
+parents[1:5,1:5]
+map[1:3,1:3]
+
+
+phenotypes[1:5, ]
+table(phenotypes[, "Cohort.Year"])
+table(phenotypes[, "Site"])
+
+table(phenotypes[which(phenotypes[, "Site"] == "UM"), "Cohort.Year"])
+table(phenotypes[which(phenotypes[, "Site"] == "UT"), "Cohort.Year"])
+table(phenotypes[which(phenotypes[, "Site"] == "JL"), "Cohort.Year"])
+
+plot(table(phenotypes[which(phenotypes[, "Site"] == "UM"), "Cohort.Year"]), xlab = "Cohort Year", ylab = "Mice Population", pch = 3, main = "Mice Population in Site UM")
+plot(table(phenotypes[which(phenotypes[, "Site"] == "UT"), "Cohort.Year"]), xlab = "Cohort Year", ylab = "Mice Population", pch = 3, main = "Mice Population in Site UT")
+plot(table(phenotypes[which(phenotypes[, "Site"] == "JL"), "Cohort.Year"]), xlab = "Cohort Year", ylab = "Mice Population", pch = 3, main = "Mice Population in Site JL")
+
+Male <- which(phenotypes[, "Sex"] == "M")
+Female <- which(phenotypes[, "Sex"] == "F")
+
+length(Male)
+length(Female)
+
+UMP <- which(phenotypes[,"Site"] == "UM")
+UTP <- which(phenotypes[,"Site"] == "UT")
+JLP <- which(phenotypes[,"Site"] == "JL")
+
+hist(phenotypes[UMP, "Longevity_HET3_ITP"])
+hist(phenotypes[UTP, "Longevity_HET3_ITP"])
+hist(phenotypes[JLP, "Longevity_HET3_ITP"])
+
+MaleUM <- which(phenotypes[, "Site"] == "UM", phenotypes["Sex"] == "M")
+FemaleUM <- which(phenotypes[,"Site"] == "UM", phenotypes[, "Sex"] == "F")
+MaleUT <- which(phenotypes[,"Site"] == "UT", phenotypes[, "Sex"] == "M")
+FemaleUT <- which(phenotypes[,"Site"] == "UT", phenotypes[, "Sex"] == "F")
+MaleJL <- which(phenotypes[,"Site"] == "JL", phenotypes[, "Sex"] == "M")
+FemaleJL <- which(phenotypes[,"Site"] == "JL", phenotypes[, "Sex"] == "F")
+
+
+MaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "M")
+length(MaleUM)
+FemaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "F")
+length(FemaleUM)
+
+length(UMP)
+
+MaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "M")
+length(MaleUT)
+FemaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "F")
+length(FemaleUT)
+
+length(UTP)
+
+MaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "M")
+length(MaleJL)
+FemaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "F")
+length(FemaleJL)
+
+length(JLP)
+
+MaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "M")
+length(MaleUM)
+FemaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "F")
+length(FemaleUM)
+
+length(UMP)
+
+MaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "M")
+length(MaleUT)
+FemaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "F")
+length(FemaleUT)
+
+length(UTP)
+
+MaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "M")
+length(MaleJL)
+FemaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "F")
+length(FemaleJL)
+
+length(JLP)
+
+table(phenotypes[MaleUM, "Cohort.Year"])
+hist(phenotypes[MaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UM that lives for more than 600 days")
+table(phenotypes[FemaleUM, "Cohort.Year"])
+hist(phenotypes[FemaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UM that lives for more than 600 days")
+table(phenotypes[MaleUT, "Cohort.Year"])
+hist(phenotypes[MaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UT that lives for more than 600 days")
+table(phenotypes[FemaleUT, "Cohort.Year"])
+hist(phenotypes[FemaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UT that lives for more than 600 days")
+table(phenotypes[MaleJL, "Cohort.Year"])
+hist(phenotypes[MaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at JL that lives for more than 600 days")
+table(phenotypes[FemaleJL, "Cohort.Year"])
+hist(phenotypes[FemaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at JL that lives for more than 600 days")
+
+mean(MaleUM)
+mode(phenotypes[MaleUM, "Cohort.Year"])
+mean(phenotypes[MaleUM, "Cohort.Year"])
+median(phenotypes[MaleUM, "Cohort.Year"])
+
+plot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"])
+plot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"])
+
+boxplot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"], col = c("limegreen", "blue", "orange", "hotpink", "yellow", "gray", "green"))
+
+setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
+# Loading in the different files
+phenotypes <- read.table ("ind.sorted.phe.txt")
+iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
+phenotypes <- phenotypes[iix, ]
+map <- read.table ("map.sorted.txt")
+genotype <- read.table ("all.vcf.sorted.txt")
+parents <- read.table ("fvcfAll.txt")
+map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
+
+# pGTS is a vector of length 4
+
+ConversionPP <- function(pGTS){
+
+if(pGTS[1] == "1/1" && pGTS[2] == "0/0" && pGTS[3] == "0/0" && pGTS[4] == "0/0"){
+  return(c("B?", "A?", "X"))
+}
+
+ if(pGTS[1] == "0/0" && pGTS[2] == "1/1" && pGTS[3] == "0/0" && pGTS[4] == "0/0"){
+    return(c("A?", "B?", "X"))
+}
+
+if(pGTS[1] == "0/0" && pGTS[2] == "0/0" && pGTS[3] == "1/1" && pGTS[4] == "0/0"){
+  return(c("?D", "?C", "X"))
+}
+
+if(pGTS[1] == "0/0" && pGTS[2] == "0/0" && pGTS[3] == "0/0" && pGTS[4] == "1/1"){
+  return(c("?C", "?D", "X"))
+}
+
+if(pGTS[1] == "1/1" && pGTS[2] == "1/1" && pGTS[3] == "0/0" && pGTS[4] == "0/0"){
+  return(c("X", "??", "X"))
+}
+
+if(pGTS[1] == "0/0" && pGTS[2] == "1/1" && pGTS[3] == "1/1" && pGTS[4] == "0/0"){
+  return(c("AD", "??", "BC"))
+}
+
+if(pGTS[1] == "0/0" && pGTS[2] == "0/0" && pGTS[3] == "1/1" && pGTS[4] == "1/1"){
+  return(c("X", "??", "X"))
+}
+
+if(pGTS[1] == "1/1" && pGTS[2] == "0/0" && pGTS[3] == "1/1" && pGTS[4] == "0/0"){
+  return(c("BD", "??", "AC"))
+}
+
+if(pGTS[1] == "0/0" && pGTS[2] == "1/1" && pGTS[3] == "0/0" && pGTS[4] == "1/1"){
+    return(c("AC", "??", "BD"))
+}
+
+if(pGTS[1] == "1/1" && pGTS[2] == "0/0" && pGTS[3] == "0/0" && pGTS[4] == "1/1"){
+    return(c("BC", "BD", "AD"))
+}
+
+if(pGTS[1] == "0/0" && pGTS[2] == "1/1" && pGTS[3] == "0/0" && pGTS[4] == "0/0"){
+    return(c("A?", "B?", "X"))
+}
+
+if(pGTS[1] == "0/0" && pGTS[2] == "1/1" && pGTS[3] == "1/1" && pGTS[4] == "1/1"){
+    return(c("X", "A?", "B?"))
+}
+
+if(pGTS[1] == "1/1" && pGTS[2] == "0/0" && pGTS[3] == "1/1" && pGTS[4] == "1/1"){
+    return(c("X", "B?", "A?"))
+}
+
+if(pGTS[1] == "1/1" && pGTS[2] == "1/1" && pGTS[3] == "0/0" && pGTS[4] == "1/1"){
+    return(c("X", "?C", "?D"))
+}
+
+if(pGTS[1] == "1/1" && pGTS[2] == "1/1" && pGTS[3] == "1/1" && pGTS[4] == "0/0"){
+    return(c("X", "?D", "?C"))
+}
+
+}
+ 
+ConversionPP(parents[1, 6:9])
+rr <- c()
+for(x in 1:nrow(parents)){
+    #Every time for each element
+    r <- ConversionPP(parents[x, 6:9])
+  rr <- rbind(rr, r)
+}
+
+parents <- cbind(parents, rr)	
+parents <- cbind(parents, "NA" = "")
+
+colnames(parents)[10:12] <- c("0/0", "0/1", "1/1")
+
+genotype[1, ]
+rr <- c()
+for(x in 1:nrow(genotype)){
+	inm <- rownames(genotype)[x] # marker
+	minp <- map[inm, "PosName"] # convert from name to chr_position
+	gt <- as.character(genotype[x, ])
+	gt[is.na(gt)] <- "NA"
+	r <- as.character(parents[minp, gt])
+	rr <- rbind (rr,r)
+}
+
+
+colnames(rr) <- colnames(genotype)
+rownames(rr) <- rownames(genotype)
+write.table(rr, "pHaplo600.txt", sep="\t", quote=FALSE)
+
+# Data Analysis part 8
+setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
+
+# Loading in the different files
+phenotypes <- read.table ("ind.sorted.phe.txt")
+iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
+phenotypes <- phenotypes[iix, ]
 map <- read.table ("map.sorted.txt")
 map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
-gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE)
+haplo <- read.table("pHaplo600.txt",  sep = "\t")
+haplo[1:10,1:10]
+haplo <- read.table("pHaplo600.txt",  sep = "\t", na.strings = "", colClasses ="character")
+haplo[1:10,1:10]
+
+
+for(x in 1:nrow(haplo)){ 
+	mname <- rownames(haplo)[x]
+	if(x != nrow(haplo)){
+		mnext <- rownames(haplo) [x+1]
+		map[mname,]
+		map[mnext,]
+	}
+}
+map[mname,]
+map[mnext,]
+
+
+# Merging 2 markers into 1 if they are in the same Position
+haploNDM <- c()
+
+for(x in  1:nrow(haplo)){ 
+	mname <- rownames(haplo)[x]
+	if(x != nrow(haplo)){
+		mnext <- rownames(haplo)[x+1]
+		if(map[mname, "PosName"] != map[mnext, "PosName"]){
+			haploNDM <- rbind(haploNDM, haplo[x,])
+			}
+		}
+	cat("Scanning",x,"\n")
+}
+
+
+# Merging 2 markers into 1 if they are in the same Position and  skipping to the next marker after merge
+haploNDM <- c()
+x <- 1
+while(x < nrow(haplo)){ 
+	mname <- rownames(haplo)[x]
+	if(x != nrow(haplo)){
+		mnext <- rownames(haplo)[x+1]
+		if(map[mname, "PosName"] != map[mnext, "PosName"]){
+			haploNDM <- rbind(haploNDM, haplo[x,])
+			x <- x + 1
+		}else{
+			# we know x and x+1 are the same markers
+			newM <- haplo[x,]
+			iix <- which (is.na(newM))
+			newM [iix] <- haplo[x + 1,iix]
+			haploNDM <- rbind(haploNDM, newM)
+			x <- x+ 2
+		}
+	}
+	cat("Scanning",x,"\n")
+}
+ 
+#Picking the last unique marker 
+haploNDM <- c()
+x <- 1
+while(x <= nrow(haplo)){ 
+	mname <- rownames(haplo)[x]
+	if(x != nrow(haplo)){
+		mnext <- rownames(haplo)[x+1]
+		if(map[mname, "PosName"] != map[mnext, "PosName"]){
+			haploNDM <- rbind(haploNDM, haplo[x,])
+			x <- x + 1
+		}else{
+			# we know x and x+1 are the same markers
+			newM <- haplo[x,]
+			iix <- which (is.na(newM))
+			newM [iix] <- haplo[x + 1,iix]
+			haploNDM <- rbind(haploNDM, newM)
+			x <- x+ 2
+		}
+	}else{
+		haploNDM <- rbind(haploNDM, haplo[x,])
+			x <- x + 1
+		}
+	cat("Scanning",x,"\n")
+}
+
+
+write.table(haploNDM, "haplotypes_uniques_600.txt", sep = "\t", quote=FALSE, na = "")
+
+
+part 8 continued
+setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
+
+# Loading in the different files
+phenotypes <- read.table ("ind.sorted.phe.txt")
+iix600 <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
+phenotypes <- phenotypes[iix600, ]
+map <- read.table ("map.sorted.txt")
+map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
+haplo <- read.table("haplotypes_uniques_600.txt",  sep = "\t", na.strings = "", colClasses ="character")
+haplo[1:10,1:10]
+
+
+haplo[haplo == "??"] <- NA
+haplo[haplo == "X"] <- NA
+haplo[haplo == "AC"] <- 1
+haplo[haplo == "BC"] <- 2
+haplo[haplo == "AD"] <- 3
+haplo[haplo == "BD"] <- 4
+haplo[haplo == "A?"] <- 5
+haplo[haplo == "B?"] <- 6
+haplo[haplo == "?C"] <- 7
+haplo[haplo == "?D"] <- 8
+
+
+mArranged <- map[rownames(haplo), c("Chr", "Position")] 
+mArranged[, "Position"] <- as.numeric(mArranged[, "Position"]) / 1000000
+mPrep <- cbind(mArranged,haplo)
+pArranged <- t(phenotypes[, c("Sex", "Site", "Cohort.Year", "Treatment_Effect", "Longevity_HET3_ITP")])
+pArranged <- cbind(NA,NA,pArranged)
+pArranged["Longevity_HET3_ITP", ] <- as.numeric(pArranged["Longevity_HET3_ITP", ])
+
+
+write.table(pArranged, "Cross600.csvr", sep = "," ,quote = FALSE, na = "" , col.names = FALSE)
+write.table(mPrep, "Cross600.csvr" ,sep = "," ,quote = FALSE, na = "", append = TRUE, col.names = FALSE)
+
+library(qtl)
+rQTLmap <- read.cross("csvr", file = "Cross600.csvr", genotypes = NULL, estimate.map = FALSE, convertXdata= FALSE)
+
+rQTLfilled <- fill.geno(rQTLmap, method = "maxmarginal", min.prob = 0.80)
+
+mgeno <- pull.geno(rQTLfilled)
+rownames(mgeno) <- colnames(haplo)
+write.table(t(mgeno), "fille_geno600.txt", sep = "\t", quote=FALSE)
+
+genoprob <- calc.genoprob(rQTLmap)
+gtsPM <- pull.genoprob(genoprob)
+
+rownames(gtsPM) = colnames(haplo)
+write.table(gtsPM, "gtsPM600.txt", sep ="\t", quote = FALSE)
+
+setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
+# Loading in the different files
+phenotypes <- read.table ("ind.sorted.phe.txt") # map for 600 days
+iix600 <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
+phenotypes <- phenotypes[iix600, ]
+map <- read.table ("map.sorted.txt")
+map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
+gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE) # maps for 600 days
 
 
 # fix for the map not matching to the genotypes after merging markers and imputation
@@ -141,9 +508,15 @@ setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
 # Loading in the different files
 phenotypes <- read.table ("ind.sorted.phe.txt")
+iix600 <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
+phenotypes <- phenotypes[iix600, ]
+
+
 map <- read.table ("map.sorted.txt")
 map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
 gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE)
+
+gtsPM <- gtsPM[rownames(phenotypes), ] # subset using the rownames of the genotypes that are left
 
 
 # fix for the map not matching to the genotypes after merging markers and imputation
