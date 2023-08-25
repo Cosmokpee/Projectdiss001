@@ -1,0 +1,63 @@
+ Loading in the different files
+phenotypes = read.table ("ind.sorted.phe.txt")
+map <- read.table ("map.sorted.txt")
+genotype <- read.table ("all.vcf.sorted.txt")
+parents <- read.table ("fvcfAll.txt")
+phenotypes[1:10,1:10]
+
+iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 850)
+phenotypes <- phenotypes[iix, ]
+
+Y <- phenotypes[, "Longevity_HET3_ITP"]
+sex <- phenotypes[, "Sex"]
+site <-phenotypes[, "Site"]
+cohort <- as.factor(phenotypes[, "Cohort.Year"])
+treatment <- as.factor(phenotypes[, "Treatment_Effect"])
+
+lm(Y ~ sex) ..... #null model
+
+lm(Y ~ sex + 0)
+m1 <- lm(Y ~ sex + 0)
+m2 <- lm(Y ~ sex + site + 0)
+AIC(m1,m2)
+
+# model 2 is the best option because there is over -40 difference 
+
+m3 <- lm(Y ~ sex + site + cohort + 0)
+AIC(m2,m3)
+
+#model 2 is better because there is a -5 difference, we need moe than -10 difference
+
+m3 <- lm(Y ~ sex + site + cohort + treatment + 0)
+AIC(m2,m3)
+
+# model 3 is better because there is a -19 difference
+model 
+
+forpie <- anova(lm(Y ~ sex + site + cohort + treatment ))
+pie(forpie[,"Sum Sq"] / sum(forpie[,"Sum Sq"]))
+
+round(100 * (forpie[,"Sum Sq"] / sum(forpie[,"Sum Sq"])), 1)
+pch <- round(100 * (forpie[,"Sum Sq"] / sum(forpie[,"Sum Sq"])), 1)
+names(pch) <- c("Sex", "Site", "Cohort", "Treatment", "Unknown")
+pie(pch)
+
+m4 <- lm(Y ~ sex + site + cohort + treatment + sex:site + 0)
+AIC(m3,m4) 
+
+# model 3 is better than 4 but has a difference of 5
+
+m4 <- (lm(Y ~ sex + site + cohort + treatment + sex:site + sex:cohort + 0))
+AIC(m3,m4)
+
+#model 3 is still a better option
+
+m4 <- (lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + 0))
+AIC(m3,m4)
+
+#model 4 is smaller with a df of 25 but a -15 difference
+
+m5 <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + cohort:treatment + 0)
+AIC(m4,m5)
+ 
+#model 5 is better with a df of 32 but a -32 difference. model 5 is the best

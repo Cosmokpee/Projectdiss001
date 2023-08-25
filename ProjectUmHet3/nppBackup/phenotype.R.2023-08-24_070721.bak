@@ -76,12 +76,12 @@ pie(round(percentages, 1))
 percentages <- (res3[, "Sum Sq"] / sum(res3[, "Sum Sq"])) * 100
 pie(round(percentages, 1))
 
-# 	reads as a as.factor
+# 	reades as a as.factor
   
 ml <- lm GER MODEL INCLUDING 3 PREDICTOR
 res <-1(lm(Control[, "Longevity_HET3_ITP"] ~ Control[, "Sex"] + Control[, "BodyWeight_HET3_ITP_6m"]))
 
-#compare variance 
+#compare variandddce 
 # conclusion ml is preferred because 'it's easier / more parcimoneous and m2 is not 10 points better
 
 

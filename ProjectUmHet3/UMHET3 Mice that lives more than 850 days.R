@@ -1,8 +1,4 @@
-#
-##
-###
-####
-##### Code for Dissertation 
+Code for Dissertation 
 ######
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
@@ -14,7 +10,7 @@ genotype <- read.table ("all.vcf.sorted.txt")
 parents <- read.table ("fvcfAll.txt")
 phenotypes[1:10,1:10]
 
-iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
+iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 850)
 phenotypes <- phenotypes[iix, ]
 
 Y <- phenotypes[, "Longevity_HET3_ITP"]
@@ -29,17 +25,19 @@ lm(Y ~ sex + 0)
 m1 <- lm(Y ~ sex + 0)
 m2 <- lm(Y ~ sex + site + 0)
 AIC(m1,m2)
-#model2 is better because it has -67.73 difference
+
+# model 2 is the best option because there is over -40 difference 
 
 m3 <- lm(Y ~ sex + site + cohort + 0)
 AIC(m2,m3)
 
-#model3 is better because there is -11 difference
+#model 2 is better because there is a -5 difference, we need moe than -10 difference
 
-m4 <- lm(Y ~ sex + site + cohort + treatment + 0)
-AIC(m3,m4)
+m3 <- lm(Y ~ sex + site + cohort + treatment + 0)
+AIC(m2,m3)
 
-#model 4 is better because it has a difference of 80
+# model 3 is better because there is a -19 difference
+model 
 
 forpie <- anova(lm(Y ~ sex + site + cohort + treatment ))
 pie(forpie[,"Sum Sq"] / sum(forpie[,"Sum Sq"]))
@@ -49,25 +47,32 @@ pch <- round(100 * (forpie[,"Sum Sq"] / sum(forpie[,"Sum Sq"])), 1)
 names(pch) <- c("Sex", "Site", "Cohort", "Treatment", "Unknown")
 pie(pch)
 
-m5 <- lm(Y ~ sex + site + cohort + treatment + sex:site + 0)
-AIC(m4,m5) 
-#model5 is better because 23 difference
+m4 <- lm(Y ~ sex + site + cohort + treatment + sex:site + 0)
+AIC(m3,m4) 
 
-m6 <- (lm(Y ~ sex + site + cohort + treatment + sex:site + sex:cohort + 0))
-AIC(m5,m6)
+# model 3 is better than 4 but has a difference of 5
 
-# model 5 is still a beter option, because it has a lower AIC than model 6
+m4 <- (lm(Y ~ sex + site + cohort + treatment + sex:site + sex:cohort + 0))
+AIC(m3,m4)
 
-m6 <- (lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + cohort:treatment + 0))
-AIC(m5,m6)
+#model 3 is still a better option
 
-# model 6 is the best model for the mice that lives for more than 600 days
+m4 <- (lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + 0))
+AIC(m3,m4)
+
+#model 4 is smaller with a df of 25 but a -15 difference
+
+m5 <- lm(Y ~ sex + site + cohort + treatment + sex:site + site:cohort + cohort:treatment + 0)
+AIC(m4,m5)
+ 
+#model 5 is better with a df of 32 but a -32 difference. model 5 is the best
+
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
 # Loading in the different files
 phenotypes <- read.table ("ind.sorted.phe.txt")
-iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
+iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 850)
 phenotypes <- phenotypes[iix, ]
 map <- read.table ("map.sorted.txt")
 genotype <- read.table ("all.vcf.sorted.txt")
@@ -159,17 +164,17 @@ length(FemaleJL)
 length(JLP)
 
 table(phenotypes[MaleUM, "Cohort.Year"])
-hist(phenotypes[MaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UM that lives for more than 600 days")
+hist(phenotypes[MaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UM that lives for more than 850 days")
 table(phenotypes[FemaleUM, "Cohort.Year"])
-hist(phenotypes[FemaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UM that lives for more than 600 days")
+hist(phenotypes[FemaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UM that lives for more than 850 days")
 table(phenotypes[MaleUT, "Cohort.Year"])
-hist(phenotypes[MaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UT that lives for more than 600 days")
+hist(phenotypes[MaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UT that lives for more than 850 days")
 table(phenotypes[FemaleUT, "Cohort.Year"])
-hist(phenotypes[FemaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UT that lives for more than 600 days")
+hist(phenotypes[FemaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UT that lives for more than 850 days")
 table(phenotypes[MaleJL, "Cohort.Year"])
-hist(phenotypes[MaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at JL that lives for more than 600 days")
+hist(phenotypes[MaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at JL that lives for more than 850 days")
 table(phenotypes[FemaleJL, "Cohort.Year"])
-hist(phenotypes[FemaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at JL that lives for more than 600 days")
+hist(phenotypes[FemaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at JL that lives for more than 850 days")
 
 mean(MaleUM)
 mode(phenotypes[MaleUM, "Cohort.Year"])
@@ -183,12 +188,12 @@ boxplot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"], col = 
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 # Loading in the different files
-phenotypes <- read.table ("ind.sorted.phe.txt") # map for 600 days
-iix600 <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
-phenotypes <- phenotypes[iix600, ]
+phenotypes <- read.table ("ind.sorted.phe.txt") # map for 850 days
+iix850 <- which(phenotypes[, "Longevity_HET3_ITP"] > 850)
+phenotypes <- phenotypes[iix850, ]
 map <- read.table ("map.sorted.txt")
 map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
-gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE) # maps for 600 days
+gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE) # maps for 850 days
 gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE)
 
 gtsPM <- gtsPM[rownames(phenotypes), ] # subset using the rownames of the genotypes that are left
@@ -241,7 +246,7 @@ for(x in 1:20){
   pos <- pos + chr.length[x] + 30000000
 }
 
-plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice that live for more than 600 days")
+plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice that live for more than 850 days")
 i <- 1
 for(x in 1:20){
   iim <- which(map[, "Chr"] == x)
@@ -261,8 +266,8 @@ setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
 # Loading in the different files
 phenotypes <- read.table ("ind.sorted.phe.txt")
-iix600 <- which(phenotypes[, "Longevity_HET3_ITP"] > 600)
-phenotypes <- phenotypes[iix600, ]
+iix850 <- which(phenotypes[, "Longevity_HET3_ITP"] > 850)
+phenotypes <- phenotypes[iix850, ]
 
 
 map <- read.table ("map.sorted.txt")
@@ -330,7 +335,7 @@ for(x in 1:20){
   pos <- pos + chr.length[x] + 30000000
 }
 
-plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice that lives more than 600 days")
+plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice that lives more than 850 days")
 i <- 1
 for(x in 1:20){
   iim <- which(map[, "Chr"] == x)
@@ -365,46 +370,44 @@ vioplot(adjusted ~ unlist(gtsFilled["1_116455004",rownames(phenotypes)]),
 	col = c("green", "blue", "orange", "hotpink"), main = "Longevity effect on Haplotypes", sub = "Markers at 1_116455004")
 axis(1, at  = 1:4, c("A|C", "A|D", "B|C", "B|D"))
 
-aa1 <-  boxplot(adjusted ~ unlist(gtsFilled["2_110011673", rownames(phenotypes)]))
+aa1 <-  boxplot(adjusted ~ unlist(gtsFilled["2_111645305", rownames(phenotypes)]))
 round(aa1$stats[3,],0)
-aa2 <-  boxplot(adjusted ~ unlist(gtsFilled["2_111645305", rownames(phenotypes)]))
+aa2 <-  boxplot(adjusted ~ unlist(gtsFilled["2_122522463", rownames(phenotypes)]))
 round(aa2$stats[3,],0)
-aa3 <-  boxplot(adjusted ~ unlist(gtsFilled["2_129010510", rownames(phenotypes)]))
+aa3 <-  boxplot(adjusted ~ unlist(gtsFilled["2_148990360", rownames(phenotypes)]))
 round(aa3$stats[3,],0)
-aa4 <-  boxplot(adjusted ~ unlist(gtsFilled["2_148990360", rownames(phenotypes)]))
+aa4 <-  boxplot(adjusted ~ unlist(gtsFilled["3_122855291", rownames(phenotypes)]))
 round(aa4$stats[3,],0)
-aa5 <-  boxplot(adjusted ~ unlist(gtsFilled["3_122855291", rownames(phenotypes)]))
+aa5 <-  boxplot(adjusted ~ unlist(gtsFilled["3_156416491", rownames(phenotypes)]))
 round(aa5$stats[3,],0)
-aa6 <-  boxplot(adjusted ~ unlist(gtsFilled["3_156416491", rownames(phenotypes)]))
+aa6 <-  boxplot(adjusted ~ unlist(gtsFilled["4_156147408", rownames(phenotypes)]))
 round(aa6$stats[3,],0)
-aa7 <-  boxplot(adjusted ~ unlist(gtsFilled["4_89397532", rownames(phenotypes)]))
+aa7 <-  boxplot(adjusted ~ unlist(gtsFilled["6_115619826", rownames(phenotypes)]))
 round(aa7$stats[3,],0)
-aa8 <-  boxplot(adjusted ~ unlist(gtsFilled["4_156147408", rownames(phenotypes)]))
+aa8 <-  boxplot(adjusted ~ unlist(gtsFilled["7_3162282", rownames(phenotypes)]))
 round(aa8$stats[3,],0)
-aa9 <-  boxplot(adjusted ~ unlist(gtsFilled["5_88154085", rownames(phenotypes)]))
+aa9 <-  boxplot(adjusted ~ unlist(gtsFilled["7_42613683", rownames(phenotypes)]))
 round(aa9$stats[3,],0)
-aa10 <-  boxplot(adjusted ~ unlist(gtsFilled["6_115619854", rownames(phenotypes)]))
+aa10 <-  boxplot(adjusted ~ unlist(gtsFilled["10_111300550", rownames(phenotypes)]))
 round(aa10$stats[3,],0)
-aa11 <-  boxplot(adjusted ~ unlist(gtsFilled["7_42613683", rownames(phenotypes)]))
+aa11 <-  boxplot(adjusted ~ unlist(gtsFilled["12_100838622", rownames(phenotypes)]))
 round(aa11$stats[3,],0)
-aa12 <-  boxplot(adjusted ~ unlist(gtsFilled["9_49562191", rownames(phenotypes)]))
+aa12 <-  boxplot(adjusted ~ unlist(gtsFilled["14_73006995", rownames(phenotypes)]))
 round(aa12$stats[3,],0)
-aa13 <-  boxplot(adjusted ~ unlist(gtsFilled["10_111300550", rownames(phenotypes)]))
+aa13 <-  boxplot(adjusted ~ unlist(gtsFilled["14_99384446", rownames(phenotypes)]))
 round(aa13$stats[3,],0)
-aa14 <-  boxplot(adjusted ~ unlist(gtsFilled["12_100838561", rownames(phenotypes)]))
+aa14 <-  boxplot(adjusted ~ unlist(gtsFilled["17_17733625", rownames(phenotypes)]))
 round(aa14$stats[3,],0)
-aa15 <-  boxplot(adjusted ~ unlist(gtsFilled["14_50034523", rownames(phenotypes)]))
+aa15 <-  boxplot(adjusted ~ unlist(gtsFilled["17_36854293", rownames(phenotypes)]))
 round(aa15$stats[3,],0)
 aa16 <-  boxplot(adjusted ~ unlist(gtsFilled["14_73006995", rownames(phenotypes)]))
 round(aa16$stats[3,],0)
-aa17 <-  boxplot(adjusted ~ unlist(gtsFilled["17_17733625", rownames(phenotypes)]))
-round(aa17$stats[3,],0)
 
 # Biomart 
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
-mr <- read.table("data600.txt", sep ="\t")
+mr <- read.table("data850.txt", sep ="\t")
 regions <- mr[, c(2,3,5)]
 colnames(regions) <- c("Chr", "Proximal", "Distal")
 regions
@@ -429,7 +432,7 @@ for(i in 1:nrow(regions)){
 	if(length(iix) > 0) pcg <- pcg[-iix, ]
 	iix <- grep("RIKEN cDNA",pcg[, "mgi_description"])
 	if(length(iix) > 0) pcg <- pcg[-iix, ]
-	write.table(pcg, file = paste0("PCG_600_",gsub(":", "_",r), ".txt"), sep = "\t", quote=FALSE, row.names=FALSE)
+	write.table(pcg, file = paste0("PCG_850_",gsub(":", "_",r), ".txt"), sep = "\t", quote=FALSE, row.names=FALSE)
 }
 
 

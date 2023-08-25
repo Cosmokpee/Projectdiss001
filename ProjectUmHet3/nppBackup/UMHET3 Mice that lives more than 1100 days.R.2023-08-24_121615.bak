@@ -55,132 +55,11 @@ AIC(m1,m2)
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
 # Loading in the different files
-phenotypes <- read.table ("ind.sorted.phe.txt")
-iix <- which(phenotypes[, "Longevity_HET3_ITP"] > 1100)
-phenotypes <- phenotypes[iix, ]
-map <- read.table ("map.sorted.txt")
-genotype <- read.table ("all.vcf.sorted.txt")
-parents <- read.table ("fvcfAll.txt")
-map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
-phaplo <- read.table ("pHaplo.txt",  sep = "\t")
-
-
-phenotypes[1:5,1:5]
-genotype[1:5,1:5]
-parents[1:5,1:5]
-map[1:3,1:3]
-
-
-phenotypes[1:5, ]
-table(phenotypes[, "Cohort.Year"])
-table(phenotypes[, "Site"])
-
-table(phenotypes[which(phenotypes[, "Site"] == "UM"), "Cohort.Year"])
-table(phenotypes[which(phenotypes[, "Site"] == "UT"), "Cohort.Year"])
-table(phenotypes[which(phenotypes[, "Site"] == "JL"), "Cohort.Year"])
-
-plot(table(phenotypes[which(phenotypes[, "Site"] == "UM"), "Cohort.Year"]), xlab = "Cohort Year", ylab = "Mice Population", pch = 3, main = "Mice Population in Site UM")
-plot(table(phenotypes[which(phenotypes[, "Site"] == "UT"), "Cohort.Year"]), xlab = "Cohort Year", ylab = "Mice Population", pch = 3, main = "Mice Population in Site UT")
-plot(table(phenotypes[which(phenotypes[, "Site"] == "JL"), "Cohort.Year"]), xlab = "Cohort Year", ylab = "Mice Population", pch = 3, main = "Mice Population in Site JL")
-
-Male <- which(phenotypes[, "Sex"] == "M")
-Female <- which(phenotypes[, "Sex"] == "F")
-
-length(Male)
-length(Female)
-
-UMP <- which(phenotypes[,"Site"] == "UM")
-UTP <- which(phenotypes[,"Site"] == "UT")
-JLP <- which(phenotypes[,"Site"] == "JL")
-
-hist(phenotypes[UMP, "Longevity_HET3_ITP"])
-hist(phenotypes[UTP, "Longevity_HET3_ITP"])
-hist(phenotypes[JLP, "Longevity_HET3_ITP"])
-
-MaleUM <- which(phenotypes[, "Site"] == "UM", phenotypes["Sex"] == "M")
-FemaleUM <- which(phenotypes[,"Site"] == "UM", phenotypes[, "Sex"] == "F")
-MaleUT <- which(phenotypes[,"Site"] == "UT", phenotypes[, "Sex"] == "M")
-FemaleUT <- which(phenotypes[,"Site"] == "UT", phenotypes[, "Sex"] == "F")
-MaleJL <- which(phenotypes[,"Site"] == "JL", phenotypes[, "Sex"] == "M")
-FemaleJL <- which(phenotypes[,"Site"] == "JL", phenotypes[, "Sex"] == "F")
-
-
-MaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "M")
-length(MaleUM)
-FemaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "F")
-length(FemaleUM)
-
-length(UMP)
-
-MaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "M")
-length(MaleUT)
-FemaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "F")
-length(FemaleUT)
-
-length(UTP)
-
-MaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "M")
-length(MaleJL)
-FemaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "F")
-length(FemaleJL)
-
-length(JLP)
-
-MaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "M")
-length(MaleUM)
-FemaleUM <- which(phenotypes[,"Site"] == "UM" & phenotypes[,"Sex"] == "F")
-length(FemaleUM)
-
-length(UMP)
-
-MaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "M")
-length(MaleUT)
-FemaleUT <- which(phenotypes[,"Site"] == "UT" & phenotypes[,"Sex"] == "F")
-length(FemaleUT)
-
-length(UTP)
-
-MaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "M")
-length(MaleJL)
-FemaleJL <- which(phenotypes[,"Site"] == "JL" & phenotypes[,"Sex"] == "F")
-length(FemaleJL)
-
-length(JLP)
-
-table(phenotypes[MaleUM, "Cohort.Year"])
-hist(phenotypes[MaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UM that lives for more than 1100 days")
-table(phenotypes[FemaleUM, "Cohort.Year"])
-hist(phenotypes[FemaleUM, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UM that lives for more than 1100 days")
-table(phenotypes[MaleUT, "Cohort.Year"])
-hist(phenotypes[MaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at UT that lives for more than 1100 days")
-table(phenotypes[FemaleUT, "Cohort.Year"])
-hist(phenotypes[FemaleUT, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at UT that lives for more than 1100 days")
-table(phenotypes[MaleJL, "Cohort.Year"])
-hist(phenotypes[MaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Male Population", main = "Male Mice Population at JL that lives for more than 1100 days")
-table(phenotypes[FemaleJL, "Cohort.Year"])
-hist(phenotypes[FemaleJL, "Cohort.Year"], xlab = "Cohort Year", ylab = "Female Population", main = "Female Mice Population at JL that lives for more than 1100 days")
-
-mean(MaleUM)
-mode(phenotypes[MaleUM, "Cohort.Year"])
-mean(phenotypes[MaleUM, "Cohort.Year"])
-median(phenotypes[MaleUM, "Cohort.Year"])
-
-plot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"])
-plot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"])
-
-boxplot(phenotypes[, "Longevity_HET3_ITP"] ~ phenotypes[, "Cohort.Year"], col = c("limegreen", "blue", "orange", "hotpink", "yellow", "gray", "green"))
-
-setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
-# Loading in the different files
-phenotypes <- read.table ("ind.sorted.phe.txt") # map for 1100 days
-iix1100 <- which(phenotypes[, "Longevity_HET3_ITP"] > 1100)
-phenotypes <- phenotypes[iix1100, ]
+phenotypes <- read.table ("ind.sorted.phe.txt") # map for 1100
 map <- read.table ("map.sorted.txt")
 map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
-gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE) # maps for 1100 days
-gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE)
+gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE) # also for the gtsPM for 1100
 
-gtsPM <- gtsPM[rownames(phenotypes), ] # subset using the rownames of the genotypes that are left
 
 # fix for the map not matching to the genotypes after merging markers and imputation
 MingtsPM <- unique(unlist(lapply(strsplit(colnames(gtsPM), ":"), "[", 1)))
@@ -244,21 +123,16 @@ abline(h = threshold01, col = "green", lty = 2)
 axis(1, at = chr.mids, c(1:19, "X"))
 legend("topleft", c("0.1%", "1%", "5%"), lty = 2, col =c("green", "orange", "red"), title = "Bonferonni Threshold")
 
+
 # Generating QTL Maps
 
 setwd("C:/Users/Solom/OneDrive/Documents/Project Data/")
 
 # Loading in the different files
 phenotypes <- read.table ("ind.sorted.phe.txt")
-iix1100 <- which(phenotypes[, "Longevity_HET3_ITP"] > 1100)
-phenotypes <- phenotypes[iix1100, ]
-
-
 map <- read.table ("map.sorted.txt")
 map <- cbind(map, PosName = paste(map[, "Chr"], map [, "Position"],sep="_"))
 gtsPM <- read.table("gtsPM.txt", sep = "\t", check.names=FALSE)
-
-gtsPM <- gtsPM[rownames(phenotypes), ] # subset using the rownames of the genotypes that are left
 
 
 # fix for the map not matching to the genotypes after merging markers and imputation
@@ -268,15 +142,12 @@ map <- map[MingtsPM, ]
 # Pull out the phenotypes
 Y <- phenotypes[, "Longevity_HET3_ITP"]
 sex <- phenotypes[, "Sex"]
-site <- phenotypes[, "Site"]
-cohort <- as.factor(phenotypes[, "Cohort.Year"])
-treatment <- as.factor(phenotypes[, "Treatment_Effect"])
+
 
 # Check the ordering between phenotypes and gtsPM
 all(rownames(phenotypes) == rownames(gtsPM))
 
 mnull <- lm(Y ~ sex + 0)
-
 
 # empty vector
 adjusted <- rep(NA, length (Y))
@@ -320,7 +191,7 @@ for(x in 1:20){
   pos <- pos + chr.length[x] + 30000000
 }
 
-plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice that lives more than 1100 days")
+plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice that lives more than 600 days")
 i <- 1
 for(x in 1:20){
   iim <- which(map[, "Chr"] == x)
@@ -337,10 +208,7 @@ legend("topleft", c("0.1%", "1%", "5%"), lty = 2, col =c("green", "orange", "red
 cbind(map, LOD = -log10(pvals))
 
 gtsFilled <- read.table("fille_geno.txt")
-
-h <- unlist(gtsFilled["1_116455004",rownames(phenotypes)])
-
-aa <-  boxplot(adjusted ~ h)
+aa <-  boxplot(adjusted ~ unlist(gtsFilled["1_116455004", ]))
 round(aa$stats[3,],0)
 
 install.packages("vioplot")
@@ -350,45 +218,52 @@ install.packages("vioplot")
 library(vioplot)
 #make a violin plot
 
-vioplot(adjusted ~ unlist(gtsFilled["1_116455004",rownames(phenotypes)]),
+vioplot(adjusted ~ unlist(gtsFilled["1_116455004", ]),
 	xaxt = "n", xlab = "Haplotype", las = 2, ylab = "Adjusted Longevity (days)",
 	col = c("green", "blue", "orange", "hotpink"), main = "Longevity effect on Haplotypes", sub = "Markers at 1_116455004")
 axis(1, at  = 1:4, c("A|C", "A|D", "B|C", "B|D"))
 
-aa1 <-  boxplot(adjusted ~ unlist(gtsFilled["2_110011673", rownames(phenotypes)]))
+aa1 <-  boxplot(adjusted ~ unlist(gtsFilled["1_24042124", ]))
 round(aa1$stats[3,],0)
-aa2 <-  boxplot(adjusted ~ unlist(gtsFilled["2_111645305", rownames(phenotypes)]))
+aa2 <-  boxplot(adjusted ~ unlist(gtsFilled["1_116455004", ]))
 round(aa2$stats[3,],0)
-aa3 <-  boxplot(adjusted ~ unlist(gtsFilled["2_129010510", rownames(phenotypes)]))
+aa3 <-  boxplot(adjusted ~ unlist(gtsFilled["1_170885169", ]))
 round(aa3$stats[3,],0)
-aa4 <-  boxplot(adjusted ~ unlist(gtsFilled["2_148990360", rownames(phenotypes)]))
+aa4 <-  boxplot(adjusted ~ unlist(gtsFilled["3_122855291", ]))
 round(aa4$stats[3,],0)
-aa5 <-  boxplot(adjusted ~ unlist(gtsFilled["3_122855291", rownames(phenotypes)]))
+aa5 <-  boxplot(adjusted ~ unlist(gtsFilled["3_156416491", ]))
 round(aa5$stats[3,],0)
-aa6 <-  boxplot(adjusted ~ unlist(gtsFilled["3_156416491", rownames(phenotypes)]))
+aa6 <-  boxplot(adjusted ~ unlist(gtsFilled["4_154923245", ]))
 round(aa6$stats[3,],0)
-aa7 <-  boxplot(adjusted ~ unlist(gtsFilled["4_89397532", rownames(phenotypes)]))
+aa7 <-  boxplot(adjusted ~ unlist(gtsFilled["5_88154089", ]))
 round(aa7$stats[3,],0)
-aa8 <-  boxplot(adjusted ~ unlist(gtsFilled["4_156147408", rownames(phenotypes)]))
+aa8 <-  boxplot(adjusted ~ unlist(gtsFilled["6_115619854", ]))
 round(aa8$stats[3,],0)
-aa9 <-  boxplot(adjusted ~ unlist(gtsFilled["5_88154085", rownames(phenotypes)]))
+aa9 <-  boxplot(adjusted ~ unlist(gtsFilled["7_42447717", ]))
 round(aa9$stats[3,],0)
-aa10 <-  boxplot(adjusted ~ unlist(gtsFilled["6_115619854", rownames(phenotypes)]))
+aa10 <-  boxplot(adjusted ~ unlist(gtsFilled["7_139640399", ]))
 round(aa10$stats[3,],0)
-aa11 <-  boxplot(adjusted ~ unlist(gtsFilled["7_42613683", rownames(phenotypes)]))
+aa11 <-  boxplot(adjusted ~ unlist(gtsFilled["10_13167814", ]))
 round(aa11$stats[3,],0)
-aa12 <-  boxplot(adjusted ~ unlist(gtsFilled["9_49562191", rownames(phenotypes)]))
+aa12 <-  boxplot(adjusted ~ unlist(gtsFilled["10_111300496", ]))
 round(aa12$stats[3,],0)
-aa13 <-  boxplot(adjusted ~ unlist(gtsFilled["10_111300550", rownames(phenotypes)]))
+aa13 <-  boxplot(adjusted ~ unlist(gtsFilled["12_34390148", ]))
 round(aa13$stats[3,],0)
-aa14 <-  boxplot(adjusted ~ unlist(gtsFilled["12_100838561", rownames(phenotypes)]))
+aa14 <-  boxplot(adjusted ~ unlist(gtsFilled["12_100838561", ]))
 round(aa14$stats[3,],0)
-aa15 <-  boxplot(adjusted ~ unlist(gtsFilled["14_50034523", rownames(phenotypes)]))
+aa15 <-  boxplot(adjusted ~ unlist(gtsFilled["13_89689878", ]))
 round(aa15$stats[3,],0)
-aa16 <-  boxplot(adjusted ~ unlist(gtsFilled["14_73006995", rownames(phenotypes)]))
+aa16 <-  boxplot(adjusted ~ unlist(gtsFilled["14_67866055", ]))
 round(aa16$stats[3,],0)
-aa17 <-  boxplot(adjusted ~ unlist(gtsFilled["17_17733625", rownames(phenotypes)]))
+aa17 <-  boxplot(adjusted ~ unlist(gtsFilled["14_73006995", ]))
 round(aa17$stats[3,],0)
+aa18 <-  boxplot(adjusted ~ unlist(gtsFilled["17_17733625", ]))
+round(aa18$stats[3,],0)
+aa19 <-  boxplot(adjusted ~ unlist(gtsFilled["18_11842198", ]))
+round(aa19$stats[3,],0)
+aa20 <-  boxplot(adjusted ~ unlist(gtsFilled["18_70827264", ]))
+round(aa20$stats[3,],0)
+
 
 # Biomart 
 
@@ -421,4 +296,5 @@ for(i in 1:nrow(regions)){
 	if(length(iix) > 0) pcg <- pcg[-iix, ]
 	write.table(pcg, file = paste0("PCG_1100_",gsub(":", "_",r), ".txt"), sep = "\t", quote=FALSE, row.names=FALSE)
 }
+
 
