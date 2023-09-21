@@ -37,19 +37,5 @@ nchr <- length(table(mapsorted[ , "Chr"]))
     points(x = chr, y = mapsorted[x, "Position"], pch = "-")
  }
  
- # Chromosome names and marker counts
-chromosomes <- c("1", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "2", "3", "4", "5", "6", "7", "8", "9", "X")
-markers <- c(121, 53, 126, 56, 65, 77, 50, 37, 61, 50, 40, 124, 85, 92, 82, 87, 120, 82, 66, 19)
-
-# Create a data frame
-df <- data.frame(Chromosome = chromosomes, Markers = markers)
-
-# Compute the average number of markers
-average_markers <- mean(df$Markers)
-
-# Display the data frame
-print(df)
-
-# Display the average marker count in percentage
-print(paste("Average SNPs in Percentage:", average_markers / sum(df$Markers) * 100, "%"))
+ 
   

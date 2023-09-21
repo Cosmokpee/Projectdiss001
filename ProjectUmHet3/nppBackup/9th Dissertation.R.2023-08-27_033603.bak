@@ -61,7 +61,7 @@ for(x in 1:20){
   pos <- pos + chr.length[x] + 30000000
 }
 
-plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice that lives more than 350 days")
+plot(x = map[, "cumPos"], y = -log10(pvals), col = c("black", "orange")[chrI], pch = 19, xaxt = "n", xlab = "Chromosome", las = 2, main = "QTL mapping on longevity in UM-HET3 Mice")
 i <- 1
 for(x in 1:20){
   iim <- which(map[, "Chr"] == x)
